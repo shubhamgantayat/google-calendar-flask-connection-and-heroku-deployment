@@ -27,10 +27,10 @@ def return_event():
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
             port = int(os.environ.get('PORT', 5000))
-            creds = flow.run_local_server(host='https://desolate-tor-51645.herokuapp.com/calendar', port=port)
+            creds = flow.run_local_server(host='0.0.0.0/calendar', port=port)
         # Save the credentials for the next run
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+        # with open('token.json', 'w') as token:
+        #     token.write(creds.to_json())
 
     service = build('calendar', 'v3', credentials=creds)
 
