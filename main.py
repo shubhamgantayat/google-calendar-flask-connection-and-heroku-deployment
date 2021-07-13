@@ -25,9 +25,10 @@ def return_event():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                'credentials.json', SCOPES,)
             port = int(os.environ.get('PORT', 5000))
-            creds = flow.run_local_server(port=0)
+
+            creds = flow.run_local_server('127.0.0.1', port=port)
         # Save the credentials for the next run
         # with open('token.json', 'w') as token:
         #     token.write(creds.to_json())
