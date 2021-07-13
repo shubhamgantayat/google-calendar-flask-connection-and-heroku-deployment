@@ -44,7 +44,7 @@ def calendar():
             start = event['start'].get('dateTime', event['start'].get('date'))
             e = dict(event)
             if 'summary' in e.keys():
-                result.append([start, e['summary']])
+                result.append(' - '.join([start, e['summary']]))
         string = '\n'.join(result) if len(result) != 0 else 'No birthdays found on your google calendar'
         return render_template('form.html',results = string)
 
