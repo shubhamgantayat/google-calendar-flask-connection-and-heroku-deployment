@@ -1,7 +1,7 @@
 import os
 
 from flask import render_template, jsonify, Flask, request
-from main import main
+from main import return_event
 
 app = Flask(__name__)
 
@@ -16,8 +16,7 @@ def check_prime():
     if request.method == 'POST':
         string = ''
         try:
-            num = int(request.form['num'])
-            flag = main()
+            string = return_event()
         except ValueError:
             string = 'Please enter an integer'
         except TypeError:
