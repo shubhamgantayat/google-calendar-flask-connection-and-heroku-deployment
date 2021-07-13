@@ -27,7 +27,7 @@ def return_event():
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
             port = int(os.environ.get('PORT', 5000))
-            creds = flow.run_local_server(host='0.0.0.0', port=port)
+            creds = flow.run_local_server(host='127.0.0.1', port=port)
         # Save the credentials for the next run
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
@@ -35,11 +35,12 @@ def return_event():
     service = build('calendar', 'v3', credentials=creds)
 
     # Call the Calendar API
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
     print('Getting the upcoming 10 events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=10, singleEvents=True,
-                                        orderBy='startTime').execute()
+    events_result = service.events().list(calendarId='addressbook#contacts@group.v.calendar.google.com',
+                                          timeMin=now,
+                                          maxResults=10, singleEvents=True,
+                                          orderBy='startTime').execute()
     events = events_result.get('items', [])
 
     if not events:
@@ -47,6 +48,12 @@ def return_event():
     result = []
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        result.append([start, event['summary']])
-    return str(result)
+        e = dict(event)
+        if 'summary' in e.keys():
+            result.append([start, e['summary']])
+    return result
 
+
+if __name__ == "__main__":
+    for i in return_event():
+        print(i)
