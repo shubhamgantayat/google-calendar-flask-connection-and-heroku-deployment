@@ -25,8 +25,8 @@ def check_prime():
         try:
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES, )
-            port = int(os.environ.get('PORT', 5000))
-            creds = flow.run_local_server(host='0.0.0.0', port=8080)
+            port = int(os.environ.get('PORT', 8080))
+            creds = flow.run_local_server(host='0.0.0.0', port=port)
             service = build('calendar', 'v3', credentials=creds)
 
             # Call the Calendar API
