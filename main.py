@@ -1,7 +1,7 @@
 import datetime
 import os.path
 from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google_auth_oauthlib.flow import InstalledAppFlow,Flow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
@@ -24,11 +24,14 @@ def return_event():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES,)
-            port = int(os.environ.get('PORT', 5000))
+            
+            # flow = InstalledAppFlow.from_client_secrets_file(
+            #     'credentials.json', SCOPES)
+            #
+            # port = int(os.environ.get('PORT', 5000))
+            #
+            # creds = flow.run_local_server('127.0.0.1', port=port)
 
-            creds = flow.run_local_server('127.0.0.1', port=port)
         # Save the credentials for the next run
         # with open('token.json', 'w') as token:
         #     token.write(creds.to_json())
